@@ -1,4 +1,4 @@
-export default ({beneficiaryModel, raveClient}) => {
+export default ({beneficiaryModel, raveClient, adminModel}) => {
 	const verifyBeneficiary = async (req, res) => {
 		try {
 			const {bid} = req.params;
@@ -25,6 +25,15 @@ export default ({beneficiaryModel, raveClient}) => {
 			if (!err.statusCode) err.statusCode = 500;
 			next(err);
 		}
-	};
-	return {verifyBeneficiary};
+    };
+    
+    const createAdmin = async (req, res) => {
+        try {
+            
+        } catch (err) {
+			if (!err.statusCode) err.statusCode = 500;
+			next(err);
+		}
+    }
+	return {verifyBeneficiary, createAdmin};
 };

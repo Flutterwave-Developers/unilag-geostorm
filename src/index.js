@@ -105,7 +105,7 @@ app.use(
 
 app.use(
 	`${URL_PREFIX}/admin`,
-	AdminRouter({express, beneficiaryModel, verifyToken})
+	AdminRouter({express, beneficiaryModel, verifyToken, adminModel, raveClient})
 );
 
 // catch 404 and forward to error handler
