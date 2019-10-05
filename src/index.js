@@ -10,6 +10,7 @@ import logger from "morgan";
 import {config} from "dotenv";
 import Sequelize from "sequelize";
 import initializeDatabase from "./util/db";
+import {verifyToken} from "./util/auth";
 import {body} from "express-validator";
 import validator from "./util/validator";
 
@@ -21,6 +22,8 @@ import FundModel from "./models/fund";
 //Routers
 import AuthRouter from "./routes/auth";
 import FundRouter from "./routes/fund";
+import BeneficiaryRouter from "./routes/beneficiary";
+import AdminRouter from "./routes/admin";
 
 config();
 const URL_PREFIX = "/api/v1";
@@ -85,6 +88,22 @@ app.use(
 app.use(
 	`${URL_PREFIX}/fund`,
 	FundRouter({express, bodyValidator: body, fundModel, validator})
+);
+
+app.use(
+	`${URL_PREFIX}/beneficiary`,
+	BeneficiaryRouter({
+		express,
+		bcrypt,
+		beneficiaryModel,
+		bodyValidator,
+		validator
+	})
+);
+
+app.use(
+	`${URL_PREFIX}/admin`,
+	AdminRouter({express, beneficiaryModel, verifyToken})
 );
 
 // catch 404 and forward to error handler

@@ -4,7 +4,10 @@ export default ({express, bodyValidator, fundModel, validator}) => {
 	const fundRouter = express.Router();
 	const fundController = FundController({fundModel});
 
-    fundRouter.get("/", fundController.getAllFunds);
+	fundRouter.get("/", fundController.getAllFunds);
+    fundRouter.get("/:fid", fundController.getSingleFund);
     
-    return fundRouter;
+    fundRouter.post('/donate');
+
+	return fundRouter;
 };

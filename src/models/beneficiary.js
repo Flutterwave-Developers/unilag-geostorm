@@ -18,10 +18,14 @@ export default ({Sequelize, db}) => {
 			type: Sequelize.STRING,
 			allowNull: false
 		},
-		bvn: {
-			type: Sequelize.INTEGER,
+		school: {
+			type: Sequelize.STRING,
 			allowNull: false
-		},
+        },
+        school_id: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
 		email: {
 			type: Sequelize.STRING,
 			allowNull: false,

@@ -6,6 +6,12 @@ export default ({jwt, adminModel, beneficiaryModel, bcrypt}) => {
 			user = await adminModel.findOne({where: {email}});
 			if (!user) {
 				user = await beneficiaryModel.findOne({where: {email}});
+				if (!user.dataValues.verified) {
+					return res.status(401).json({
+						status: "error",
+						message: "Your account has not been verified yet"
+					});
+				}
 			}
 			if (!user) {
 				return res.status(404).json({
