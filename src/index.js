@@ -14,8 +14,13 @@ import {body} from "express-validator";
 import validator from "./util/validator";
 
 //Models
+import AdminModel from "./models/admin";
+import BeneficiaryModel from "./models/beneficiary";
+import FundModel from "./models/fund";
 
 //Routers
+import AuthRouter from "./routes/auth";
+import FundRouter from "./routes/fund";
 
 config();
 const URL_PREFIX = "/api/v1";
@@ -25,6 +30,13 @@ const PORT = process.env.PORT || 7000;
 const db = initializeDatabase({Sequelize});
 
 // Initialize Models
+const adminModel = AdminModel({Sequelize, db});
+const beneficiaryModel = BeneficiaryModel({Sequelize, db});
+const fundModel = FundModel({
+	Sequelize,
+	db,
+	BeneficiaryModel: beneficiaryModel
+});
 
 const app = express();
 
@@ -56,7 +68,24 @@ app.use((req, res, next) => {
 	next();
 });
 
-//Routers 
+//Routers
+app.use(
+	`${URL_PREFIX}/auth`,
+	AuthRouter({
+		express,
+		jwt,
+		bcrypt,
+		adminModel,
+		beneficiaryModel,
+		bodyValidator: body,
+		validator
+	})
+);
+
+app.use(
+	`${URL_PREFIX}/fund`,
+	FundRouter({express, bodyValidator: body, fundModel, validator})
+);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
