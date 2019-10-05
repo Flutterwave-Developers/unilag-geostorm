@@ -13,6 +13,7 @@ import initializeDatabase from "./util/db";
 import {verifyToken} from "./util/auth";
 import {body} from "express-validator";
 import validator from "./util/validator";
+import {raveClient} from "./util/client";
 
 //Models
 import AdminModel from "./models/admin";
@@ -96,8 +97,9 @@ app.use(
 		express,
 		bcrypt,
 		beneficiaryModel,
-		bodyValidator,
-		validator
+		bodyValidator: body,
+		validator,
+		raveClient
 	})
 );
 

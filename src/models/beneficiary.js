@@ -14,7 +14,7 @@ export default ({Sequelize, db}) => {
 			type: Sequelize.INTEGER,
 			allowNull: false
 		},
-		bank: {
+		account_bank: {
 			type: Sequelize.STRING,
 			allowNull: false
 		},

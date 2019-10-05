@@ -5,11 +5,13 @@ export default ({
 	bcrypt,
 	beneficiaryModel,
 	bodyValidator,
-	validator
+    validator,
+    raveClient
 }) => {
 	const beneficiaryController = BeneficiaryController({
 		bcrypt,
-		beneficiaryModel
+        beneficiaryModel,
+        raveClient
 	});
 	const beneficiaryRouter = express.Router();
 
@@ -30,6 +32,8 @@ export default ({
 		validator,
 		beneficiaryController.register
 	);
+
+	beneficiaryRouter.get("/banks", beneficiaryController.getBanks);
 
 	return beneficiaryRouter;
 };
